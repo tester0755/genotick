@@ -108,11 +108,7 @@ public class SimpleEngine implements Engine {
         for(DataSetResult dataSetResult: timePointResult.listDataSetResults()) {
             Prediction prediction = dataSetResult.getCumulativePrediction(engineSettings.resultThreshold);
             output.showPrediction(timePoint,dataSetResult.getName(),prediction);
-            Double actualChange = data.getActualChange(dataSetResult.getName(),timePoint);
-            if(!actualChange.isNaN()) {
-                printPercentEarned(dataSetResult.getName(), actualChange, prediction,output);
-                timePointStats.update(dataSetResult.getName(), actualChange, prediction);
-            }
+            tryUpdate(dataSetResult,timePoint,prediction,output,timePointStats);
         }
         if(engineSettings.performTraining) {
             updatePopulation();
@@ -120,7 +116,21 @@ public class SimpleEngine implements Engine {
         return timePointStats;
     }
 
-    private void printPercentEarned(DataSetName name, Double actualChange, Prediction prediction, UserOutput output) {
+    private void tryUpdate(DataSetResult dataSetResult, TimePoint timePoint, Prediction prediction, UserOutput output, TimePointStats timePointStats) {
+        try {
+            Double actualChange = data.getActualChange(dataSetResult.getName(),timePoint);
+            if(!actualChange.isNaN()) {
+                printPercentEarned(dataSetResult.getName(), actualChange, prediction,output);
+                if(!actualChange.isInfinite() && !actualChange.isNaN() && prediction != null) {
+                    timePointStats.update(dataSetResult.getName(), actualChange, prediction);
+                }
+            }
+        } catch (NoDataForTimePointException ex) {
+            /* Empty */
+        }
+    }
+
+    private void printPercentEarned(DataSetName name, double actualChange, Prediction prediction, UserOutput output) {
         double percent;
         if(prediction == Prediction.OUT) {
             return;

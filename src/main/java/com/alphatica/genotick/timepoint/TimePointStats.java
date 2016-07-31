@@ -38,11 +38,7 @@ public class TimePointStats implements Serializable {
         this.timePoint = new TimePoint(timePoint);
     }
 
-    public void update(DataSetName setName, Double actualFutureChange, Prediction prediction) {
-        if(actualFutureChange == null || prediction == null)
-            return;
-        if(actualFutureChange.isNaN() || actualFutureChange.isInfinite())
-            return;
+    public void update(DataSetName setName, double actualFutureChange, Prediction prediction) {
         SetStats stats = getSetStats(setName);
         stats.update(actualFutureChange,prediction);
     }
