@@ -30,6 +30,7 @@ class SimpleRobotKiller implements RobotKiller {
         killRobotsByWeight(population, listCopy, robotsInfos);
         killRobotsByAge(population, listCopy, robotsInfos);
         output.infoMessage("Population average weight: " + RobotInfo.getAverageWeight(robotsInfos));
+        output.infoMessage("Average robot length: " + RobotInfo.getAverageLength(robotsInfos));
     }
 
     private void killNonSymmetricalRobots(Population population, List<RobotInfo> list) {

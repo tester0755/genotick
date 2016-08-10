@@ -79,4 +79,15 @@ public class RobotInfo {
             return getTotalWeight(list) / list.size();
         }
     }
+
+    public static double getAverageLength(List<RobotInfo> robotsInfos) {
+        if(robotsInfos.isEmpty()) {
+            return 0;
+        }
+        double sum = 0;
+        for(RobotInfo robotInfo: robotsInfos) {
+            sum += robotInfo.length;
+        }
+        return sum / robotsInfos.size();
+    }
 }

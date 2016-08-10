@@ -22,7 +22,7 @@ public class SimpleBreeder implements RobotBreeder {
 
     @Override
     public void breedPopulation(Population population, List<RobotInfo> robotInfos) {
-        if(population.haveSpaceToBreed()) {
+        if (population.haveSpaceToBreed()) {
             addRequiredRandomRobots(population);
             breedPopulationFromParents(population, robotInfos);
             addOptionalRandomRobots(population);
@@ -31,20 +31,20 @@ public class SimpleBreeder implements RobotBreeder {
 
     private void addOptionalRandomRobots(Population population) {
         int count = population.getDesiredSize() - population.getSize();
-        if(count > 0) {
+        if (count > 0) {
             fillWithRobots(count, population);
         }
     }
 
     private void addRequiredRandomRobots(Population population) {
-        if(settings.randomRobots > 0) {
-            int count = (int)Math.round(settings.randomRobots * population.getDesiredSize());
-            fillWithRobots(count,population);
+        if (settings.randomRobots > 0) {
+            int count = (int) Math.round(settings.randomRobots * population.getDesiredSize());
+            fillWithRobots(count, population);
         }
     }
 
     private void fillWithRobots(int count, Population population) {
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             createNewRobot(population);
         }
     }
@@ -53,7 +53,7 @@ public class SimpleBreeder implements RobotBreeder {
         Robot robot = Robot.createEmptyRobot(settings.dataMaximumOffset, settings.ignoreColumns);
         int instructionsCount = Math.abs(mutator.getNextInt() % 1024);
         InstructionList main = robot.getMainFunction();
-        while(instructionsCount-- > 0) {
+        while (instructionsCount-- > 0) {
             addInstructionToMain(main);
         }
         population.saveRobot(robot);
@@ -64,6 +64,7 @@ public class SimpleBreeder implements RobotBreeder {
         instruction.mutate(mutator);
         main.addInstruction(instruction);
     }
+
     private void breedPopulationFromParents(Population population, List<RobotInfo> originalList) {
         List<RobotInfo> robotInfos = new ArrayList<>(originalList);
         removeNotAllowedRobots(robotInfos);
@@ -72,18 +73,18 @@ public class SimpleBreeder implements RobotBreeder {
 
     private void removeNotAllowedRobots(List<RobotInfo> robotInfos) {
         Iterator<RobotInfo> iterator = robotInfos.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             RobotInfo robotInfo = iterator.next();
-            if(!robotInfo.canBeParent(settings.minimumOutcomesToAllowBreeding, settings.outcomesBetweenBreeding))
+            if (!robotInfo.canBeParent(settings.minimumOutcomesToAllowBreeding, settings.outcomesBetweenBreeding))
                 iterator.remove();
         }
     }
 
     private void breedPopulationFromList(Population population, List<RobotInfo> list) {
-        while(population.haveSpaceToBreed()) {
+        while (population.haveSpaceToBreed()) {
             Robot parent1 = getPossibleParent(population, list);
-            Robot parent2 = getPossibleParent(population,list);
-            if(parent1 == null || parent2 == null)
+            Robot parent2 = getPossibleParent(population, list);
+            if (parent1 == null || parent2 == null)
                 break;
             Robot child = Robot.createEmptyRobot(settings.dataMaximumOffset, settings.ignoreColumns);
             makeChild(parent1, parent2, child);
@@ -98,7 +99,7 @@ public class SimpleBreeder implements RobotBreeder {
     private void makeChild(Robot parent1, Robot parent2, Robot child) {
         double weight = getParentsWeight(parent1, parent2);
         child.setInheritedWeight(weight);
-        InstructionList instructionList = mixMainInstructionLists(parent1,parent2);
+        InstructionList instructionList = mixMainInstructionLists(parent1, parent2);
         child.setMainInstructionList(instructionList);
     }
 
@@ -109,7 +110,7 @@ public class SimpleBreeder implements RobotBreeder {
     private InstructionList mixMainInstructionLists(Robot parent1, Robot parent2) {
         InstructionList source1 = parent1.getMainFunction();
         InstructionList source2 = parent2.getMainFunction();
-        return blendInstructionLists(source1,source2);
+        return blendInstructionLists(source1, source2);
     }
 
     /*
@@ -124,41 +125,49 @@ public class SimpleBreeder implements RobotBreeder {
         InstructionList instructionList = InstructionList.createInstructionList();
         int break1 = getBreakPoint(list1);
         int break2 = getBreakPoint(list2);
-        copyBlock(instructionList, list1,0,break1);
-        copyBlock(instructionList, list2,break2, list2.getSize());
+        copyBlock(instructionList, list1, 0, break1);
+        copyBlock(instructionList, list2, break2, list2.getSize());
         return instructionList;
     }
 
     private int getBreakPoint(InstructionList list) {
         int size = list.getSize();
-        if(size == 0)
+        if (size == 0)
             return 0;
         else
             return Math.abs(mutator.getNextInt() % size);
     }
 
     private void copyBlock(InstructionList destination, InstructionList source, int start, int stop) {
-        assert start <= stop: "start > stop " + String.format("%d %d", start,stop);
-        for(int i = start; i <= stop; i++) {
+        assert start <= stop : "start > stop " + String.format("%d %d", start, stop);
+        for (int i = start; i <= stop; i++) {
             Instruction instruction = source.getInstruction(i).copy();
-            if(!(instruction instanceof TerminateInstructionList)) {
-                addInstructionToInstructionList(instruction,destination);
-            } else {
+            if(instruction instanceof TerminateInstructionList) {
                 break;
             }
+            addInstructionToInstructionList(instruction, destination);
         }
     }
 
     private void addInstructionToInstructionList(Instruction instruction, InstructionList instructionList) {
-        if(!mutator.skipNextInstruction()) {
-            if (mutator.getAllowNewInstruction()) {
-                instruction = mutator.getRandomInstruction();
-                instructionList.addInstruction(instruction);
-            }
-            if (mutator.getAllowInstructionMutation()) {
-                instruction.mutate(mutator);
-            }
-            instructionList.addInstruction(instruction);
+        if (mutator.skipNextInstruction()) {
+            return;
+        }
+        possiblyAddNewInstruction(instructionList);
+        possiblyMutateInstruction(instruction);
+        instructionList.addInstruction(instruction);
+    }
+
+    private void possiblyMutateInstruction(Instruction instruction) {
+        if (mutator.getAllowInstructionMutation()) {
+            instruction.mutate(mutator);
+        }
+    }
+
+    private void possiblyAddNewInstruction(InstructionList instructionList) {
+        if (mutator.getAllowNewInstruction()) {
+            Instruction newInstruction = mutator.getRandomInstruction();
+            instructionList.addInstruction(newInstruction);
         }
     }
 
@@ -167,10 +176,10 @@ public class SimpleBreeder implements RobotBreeder {
         double target = Math.abs(totalWeight * mutator.getNextDouble());
         double weightSoFar = 0;
         Iterator<RobotInfo> iterator = list.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             RobotInfo robotInfo = iterator.next();
             weightSoFar += Math.abs(robotInfo.getWeight());
-            if(weightSoFar >= target) {
+            if (weightSoFar >= target) {
                 iterator.remove();
                 return population.getRobot(robotInfo.getName());
             }
@@ -180,7 +189,7 @@ public class SimpleBreeder implements RobotBreeder {
 
     private double sumTotalWeight(List<RobotInfo> list) {
         double weight = 0;
-        for(RobotInfo robotInfo: list) {
+        for (RobotInfo robotInfo : list) {
             weight += Math.abs(robotInfo.getWeight());
         }
         return weight;
