@@ -1,5 +1,6 @@
 package com.alphatica.genotick.genotick;
 
+import com.alphatica.genotick.data.NoDataForTimePointException;
 import com.alphatica.genotick.population.RobotInfo;
 import com.alphatica.genotick.timepoint.TimePoint;
 import com.alphatica.genotick.timepoint.TimePointExecutor;
