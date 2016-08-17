@@ -49,17 +49,31 @@ public class DataUtils {
         List<Number []> list = new ArrayList<>();
         int linesRead = 1;
         try {
-            String line;
-            while ((line = br.readLine())!=null){
-                Number [] row = processLine(line);
-                list.add(row);
-                linesRead++;
-            }
+            buildLines(br, list);
             return list;
         } catch(IOException | NumberFormatException | ArrayIndexOutOfBoundsException ex) {
             DataException de = new DataException("Error reading line " + linesRead);
             de.initCause(ex);
             throw de;
+        }
+    }
+
+    private static void buildLines(BufferedReader br, List<Number[]> list) throws IOException {
+        String line;
+        line = br.readLine();
+        processFirstLine(line,list);
+        while ((line = br.readLine())!=null){
+            Number [] row = processLine(line);
+            list.add(row);
+        }
+    }
+
+    private static void processFirstLine(String line, List<Number[]> list) {
+        try {
+            Number [] row = processLine(line);
+            list.add(row);
+        } catch (NumberFormatException ignore) {
+            /* If it's the first line then it's probably just a heading. Let's ignore NFE */
         }
     }
 
