@@ -1,0 +1,109 @@
+#######################################################################################
+########################	Example config file   ##################################
+####################### Lines starting at # are ignored ################################
+########################################################################################
+
+
+# This is a directory (relative to your current directory) where data files are stored.
+dataDirectory data
+
+# Time at which Genotick should start its simulation / training
+# Leave commented out to enable start when data start
+startTimePoint	20000101
+
+# End time of simulation / training. Same as above - comment out to
+# end when data ends
+endTimePoint	20150101
+
+# This tells Genotick where robots' files should be. It must be a directory, must exist and 
+# has to be readable. If commented out then training will be done in RAM, so obviously 
+# no prediction is possible in this mode (you need a population to make a prediction).  
+# Using path to a directory while training will make Genotick a lot slower but will 
+# allow for much larger population.  
+#populationDAO	/change/this/path
+
+# false or true. If true Genotick will do full training. If false, only prediction is given - 
+# no training or updating population / robots' weights.
+performTraining true
+
+# Desired size for the population. Should be in thousands at least to get satisfactory results. 
+# The more the merrier.
+populationDesiredSize	1000
+
+# This setting prevents robots to run forever. Given number is used to calculate 
+# maximum instructions that can be executed for a robot on each TimePoint for each data file.
+# Currently algorithm is simply: processorInstructionLimit * robotLength
+processorInstructionLimit	256
+
+# This setting is used to calculate how many robots is considered to be killed based on their age.
+maximumDeathByAge	0.01
+
+# This setting is used to calculate how many robots is considered to be killed based on their weight.
+maximumDeathByWeight	0.01
+
+# Probability of killing robot because it's too old.
+probabilityOfDeathByAge	0.5
+
+# Probability of a robot getting killed because its weight is too close to 0.
+# Currently, killing by weight happens only if there is no more space to breed in population.
+probabilityOfDeathByWeight	0.5
+
+# When a child is born is weight is zero because it has no predictions. 
+# This setting enables setting child's weight as percentage (in range 0.. 1) of its parents' average weight. 
+# This is done to protect young robots from getting killed when they had few predictions.
+inheritedChildWeight	0
+
+# This is how far into the past a robot can read data. Set it to something reasonable, depending on your time frame.
+dataMaximumOffset	256
+
+# This is how long for a robot is protected (i.e. cannot be killed).
+# Number of outcomes increments by one for every data on every time point.
+protectRobotsUntilOutcomes	100
+
+# Probability of new instruction when making a child.
+newInstructionProbability	0.01
+
+# Probability of mutating existing instruction when making a child.
+instructionMutationProbability	0.01
+
+# Probability of skipping an instruction when making a child. Better set it very close to newInstructionProbability, 
+# otherwise robots will either shrink (i.e. become useless) or grow uncontrollably (will execute forever).
+skipInstructionProbability	0.01
+
+# This settings is used to decide when a robot can have a child for the first time.
+minimumOutcomesToAllowBreeding	50
+
+# This setting is used to decide how soon a robot can have a child after previous child.
+minimumOutcomesBetweenBreeding	50
+
+# If set to true robots that make no prediction will be removed immediately. Even if they protected by protectUntilOutcomes.
+killNonPredictingRobots	true
+
+# Number of totally new and random robots to be added at each time point (as a fraction of PopulationDesiredSize). 
+# Even if population is full.
+randomRobotsAtEachUpdate	0.02
+
+# Elitism. Number of best robots to protect (as a fraction of PopulationDesiredSize). 
+# Even if they old and smell funny, as long as they useful.
+protectBestRobots	0.02
+
+# Should be used only if every data file has its reversed equivalent. 
+# If set to true and a number of UP and DOWN predictions is not the same – it gets removed immediately. 
+# Even if it's protected.
+requireSymmetricalRobots	true
+
+# This prevents Genotick from trading if Long votes are too close to Short votes.
+# Majority weight is divided by this number and still has to be bigger than minority.
+# By default this is set to 1, so even small difference can tilt the scale.
+# For example setting this number to 2 means that majority weight has to be at least 2 times bigger
+# than minority. Numbers below 1 make no sense.
+resultThreshold 1
+
+
+# This tells Genotick to ignore first N columns for learning. It still uses first column (second if
+# you count TimePoint column) for trading. 
+# Example column count (date, open, high, low, close, volume):
+# 20160222, 100, 101, 99, 103, 42
+# 0         1    2    3   4    5
+# If 'ignoreColumns' is 3 then only 4th and 5th columns (close and volume) will be used for learning.
+ignoreColumns 0
