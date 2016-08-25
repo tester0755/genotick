@@ -14,7 +14,8 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     private Robot robot;
     private RobotData data;
     private int dataColumns;
-    private Double robotResult;
+    private double robotResult;
+    private boolean finished;
     private InstructionList instructionList;
     private boolean terminateInstructionList;
     private int changeInstructionPointer;
@@ -45,7 +46,6 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void setSettings(RobotExecutorSettings settings) {
         registers = new double[totalRegisters];
-        robotResult = null;
         instructionLimitMultiplier = settings.instructionLimit;
     }
 
@@ -53,7 +53,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
         this.robot = robot;
         this.data = robotData;
         dataColumns = data.getColumns();
-        robotResult = null;
+        finished = false;
         instructionList = null;
         terminateInstructionList = false;
         changeInstructionPointer = 0;
@@ -72,7 +72,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     private Prediction executeRobotMain()  {
         executeInstructionList(robot.getMainFunction());
-        if (robotResult != null) {
+        if (finished) {
             return Prediction.getPrediction(robotResult);
         } else {
             return Prediction.getPrediction(registers[0]);
@@ -100,7 +100,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
                     newPointer = 0;
                 instructionPointer = newPointer;
             }
-        } while (!terminateInstructionList && robotResult == null);
+        } while (!terminateInstructionList && !finished);
     }
 
 
@@ -144,6 +144,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(ReturnRegisterAsResult ins) {
         int reg = ins.getRegister();
         robotResult = registers[reg];
+        finished = true;
     }
 
     @Override
@@ -238,6 +239,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(ReturnVariableAsResult ins) {
         robotResult = instructionList.getVariable(ins.getVariableArgument());
+        finished = true;
     }
 
     @Override
