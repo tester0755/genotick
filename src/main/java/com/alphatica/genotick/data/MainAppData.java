@@ -3,47 +3,46 @@ package com.alphatica.genotick.data;
 import com.alphatica.genotick.genotick.RobotData;
 import com.alphatica.genotick.timepoint.TimePoint;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MainAppData {
-    private final List<DataSet> sets;
+    private final Map<DataSetName,DataSet> sets;
 
     public MainAppData() {
-        sets = new ArrayList<>();
+        sets = new HashMap<>();
     }
 
     public void addDataSet(DataSet set) {
-        sets.add(set);
+        sets.put(set.getName(),set);
     }
 
-    public List<RobotData> prepareRobotDataList(TimePoint timePoint) {
-        List<RobotData> list = new ArrayList<>();
-        for (DataSet set : sets) {
-            RobotData robotData = set.getRobotData(timePoint);
-            if (robotData.isEmpty())
-                continue;
-            list.add(robotData);
-        }
+    public List<RobotData> prepareRobotDataList(final TimePoint timePoint) {
+        List<RobotData> list = Collections.synchronizedList(new ArrayList<>());
+        sets.entrySet().parallelStream().forEach((Map.Entry<DataSetName, DataSet> entry) -> {
+            RobotData robotData = entry.getValue().getRobotData(timePoint);
+            if(!robotData.isEmpty())
+                list.add(robotData);
+        });
         return list;
     }
 
     public Double getActualChange(DataSetName name, TimePoint timePoint) {
-        for(DataSet set: sets) {
-            if(!set.getName().equals(name))
-                continue;
-            return set.calculateFutureChange(timePoint);
+        DataSet set = sets.get(name);
+        if(set == null) {
+            return Double.NaN;
         }
-        return Double.NaN;
+        return set.calculateFutureChange(timePoint);
     }
 
     public TimePoint getFirstTimePoint() {
         if(sets.isEmpty())
             return null;
-        TimePoint firstTimePoint = sets.get(0).getFirstTimePoint();
-        for(int i = 1; i < sets.size(); i++) {
-            TimePoint first = sets.get(i).getFirstTimePoint();
-            if(first.compareTo(firstTimePoint) < 0) {
+        TimePoint firstTimePoint = null;
+        for(DataSet set: sets.values()) {
+            TimePoint first = set.getFirstTimePoint();
+            if(firstTimePoint == null) {
+                firstTimePoint = first;
+            } else if(first.compareTo(firstTimePoint) < 0){
                 firstTimePoint = first;
             }
         }
@@ -53,18 +52,20 @@ public class MainAppData {
     public TimePoint getLastTimePoint() {
         if(sets.isEmpty())
             return null;
-        TimePoint lastTimePoint = sets.get(0).getLastTimePoint();
-        for(int i = 1; i < sets.size(); i++) {
-            TimePoint last = sets.get(i).getLastTimePoint();
-            if(last.compareTo(lastTimePoint) > 0) {
+        TimePoint lastTimePoint = null;
+        for(DataSet set: sets.values()) {
+            TimePoint last = set.getLastTimePoint();
+            if(lastTimePoint == null) {
+                lastTimePoint = last;
+            } else if(last.compareTo(lastTimePoint) > 0){
                 lastTimePoint = last;
             }
         }
         return lastTimePoint;
     }
 
-    public DataSet[] listSets() {
-        return sets.toArray(new DataSet[sets.size()]);
+    public Collection<DataSet> listSets() {
+        return sets.values();
     }
 
 

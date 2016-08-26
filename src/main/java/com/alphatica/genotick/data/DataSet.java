@@ -124,4 +124,20 @@ public class DataSet {
     public TimePoint getLastTimePoint() {
         return timePoints[timePoints.length -1];
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DataSet dataSet = (DataSet) o;
+
+        return name.equals(dataSet.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
