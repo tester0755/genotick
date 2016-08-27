@@ -8,10 +8,10 @@ import java.util.List;
 
 public class RobotData {
     private final List<double[]> data;
-    private final Double actualChange;
+    private final double actualChange;
     private final DataSetName name;
 
-    public static RobotData createData(List<double[]> newData, DataSetName name, Double actualChange) {
+    public static RobotData createData(List<double[]> newData, DataSetName name, double actualChange) {
         return new RobotData(newData,name,actualChange);
     }
 
@@ -25,7 +25,7 @@ public class RobotData {
         return createData(list,name,Double.NaN);
     }
 
-    private RobotData(List<double[]> newData, DataSetName name, Double actualChange) {
+    private RobotData(List<double[]> newData, DataSetName name, double actualChange) {
         data = newData;
         this.name = name;
         this.actualChange = actualChange;

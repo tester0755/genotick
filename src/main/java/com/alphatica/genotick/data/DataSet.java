@@ -42,20 +42,16 @@ public class DataSet {
         }
     }
 
-    /**
-     * Calculates change in data in the future on first table.
-     * @param timePoint timePoint after which change is calculated
-     * @return  Double.NaN if no such timePoint or lookAheadPeriod too big. % change otherwise.
-     */
-    public Double calculateFutureChange(TimePoint timePoint) {
+
+    public double calculateFutureChange(TimePoint timePoint) {
         int i = Arrays.binarySearch(timePoints,timePoint);
         if(i < 0)
-            return Double.NaN;
+           throw NoDataForTimePointException.instance;
         int startIndex = i + 1;
         int endIndex = startIndex + 1;
         double [] array = values.get(0);
         if(endIndex >= array.length)
-            return Double.NaN;
+            throw NoDataForTimePointException.instance;
         double startValue = array[startIndex];
         double endValue = array[endIndex];
         return 100.0 *(endValue - startValue) / startValue;
@@ -93,8 +89,12 @@ public class DataSet {
             double [] copy = copyReverseArray(original, i);
             list.add(copy);
         }
-        Double futureChange = calculateFutureChange(timePoints[i]);
-        return RobotData.createData(list,name,futureChange);
+        try {
+            Double futureChange = calculateFutureChange(timePoints[i]);
+            return RobotData.createData(list,name,futureChange);
+        } catch (NoDataForTimePointException ex) {
+            return RobotData.createEmptyData(name);
+        }
     }
 
     private double[] copyReverseArray(double[] original, int i) {

@@ -1,7 +1,6 @@
 package com.alphatica.genotick.data;
 
 public class NoDataForTimePointException extends RuntimeException {
-    public NoDataForTimePointException(String message) {
-        super(message);
-    }
+    static final NoDataForTimePointException instance = new NoDataForTimePointException();
+
 }

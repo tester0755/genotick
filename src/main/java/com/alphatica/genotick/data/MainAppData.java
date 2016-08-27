@@ -19,19 +19,20 @@ public class MainAppData {
     public List<RobotData> prepareRobotDataList(final TimePoint timePoint) {
         List<RobotData> list = Collections.synchronizedList(new ArrayList<>());
         sets.entrySet().parallelStream().forEach((Map.Entry<DataSetName, DataSet> entry) -> {
-            RobotData robotData = entry.getValue().getRobotData(timePoint);
-            if(!robotData.isEmpty())
-                list.add(robotData);
+            try {
+                RobotData robotData = entry.getValue().getRobotData(timePoint);
+                if(!robotData.isEmpty())
+                    list.add(robotData);
+            } catch (NoDataForTimePointException ex) {
+                /* Ignored */
+            }
+
         });
         return list;
     }
 
-    public Double getActualChange(DataSetName name, TimePoint timePoint) {
-        DataSet set = sets.get(name);
-        if(set == null) {
-            return Double.NaN;
-        }
-        return set.calculateFutureChange(timePoint);
+    public double getActualChange(DataSetName name, TimePoint timePoint) {
+        return sets.get(name).calculateFutureChange(timePoint);
     }
 
     public TimePoint getFirstTimePoint() {
