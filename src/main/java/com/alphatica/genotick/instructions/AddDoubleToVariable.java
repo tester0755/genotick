@@ -12,7 +12,6 @@ public class AddDoubleToVariable extends VarDoubleInstruction implements Seriali
     private AddDoubleToVariable(AddDoubleToVariable i) {
         this.setDoubleArgument(i.getDoubleArgument());
         this.setVariableArgument(i.getVariableArgument());
-        this.setVariableArgument(i.getVariableArgument());
     }
 
     @SuppressWarnings("unused")

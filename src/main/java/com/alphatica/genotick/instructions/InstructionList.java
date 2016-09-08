@@ -14,7 +14,7 @@ public class InstructionList implements Serializable {
 
     private final Random random;
     private final List<Instruction> list;
-    private final int variablesCount = 256;
+    private final int variablesCount;
     private final double[] variables;
 
     private int validateVariableNumber(int index) {
@@ -22,9 +22,10 @@ public class InstructionList implements Serializable {
     }
 
     private InstructionList() {
-        list = new ArrayList<>();
-        variables = new double[variablesCount];
         random = RandomGenerator.assignRandom();
+        list = new ArrayList<>();
+        variablesCount = Math.abs(random.nextInt() % 1024);
+        variables = new double[variablesCount];
     }
 
     public static InstructionList createInstructionList() {

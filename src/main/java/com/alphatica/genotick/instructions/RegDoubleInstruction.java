@@ -21,6 +21,6 @@ abstract class RegDoubleInstruction extends RegInstruction implements Serializab
     @Override
     public void mutate(Mutator mutator) {
         super.mutate(mutator);
-        doubleArgument *= Double.MAX_VALUE * mutator.getNextDouble();
+        doubleArgument = Tools.mutateDouble(doubleArgument, mutator);
     }
 }
