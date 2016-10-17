@@ -42,6 +42,7 @@ public class Main {
             try {
                 showRobot(value);
             } catch (IllegalAccessException e) {
+                e.printStackTrace();
                 output.errorMessage(e.getMessage());
             }
             System.exit(0);
@@ -65,6 +66,7 @@ public class Main {
             try {
                 showPopulation(value);
             } catch (IllegalAccessException e) {
+                e.printStackTrace();
                 output.errorMessage(e.getMessage());
             }
             System.exit(0);

@@ -29,20 +29,16 @@ class SimpleRobotKiller implements RobotKiller {
         removeProtectedRobots(population,listCopy);
         killRobotsByWeight(population, listCopy, robotsInfos);
         killRobotsByAge(population, listCopy, robotsInfos);
-        output.infoMessage("Population average weight: " + RobotInfo.getAverageWeight(robotsInfos));
-        output.infoMessage("Average robot length: " + RobotInfo.getAverageLength(robotsInfos));
     }
 
     private void killNonSymmetricalRobots(Population population, List<RobotInfo> list) {
         if(!settings.requireSymmetricalRobots)
             return;
-        int numberKilled = 0;
         for(int i = list.size() - 1; i >= 0; i--) {
             RobotInfo info = list.get(i);
             if(info.getBias() != 0) {
                 list.remove(i);
                 population.removeRobot(info.getName());
-                numberKilled++;
             }
         }
     }
@@ -50,13 +46,11 @@ class SimpleRobotKiller implements RobotKiller {
     private void killNonPredictingRobots(Population population, List<RobotInfo> list) {
         if(!settings.killNonPredictingRobots)
             return;
-        int numberKilled = 0;
         for(int i = list.size() - 1; i >= 0; i--) {
             RobotInfo info = list.get(i);
             if(info.getTotalPredictions() == 0) {
                 list.remove(i);
                 population.removeRobot(info.getName());
-                numberKilled++;
             }
         }
     }

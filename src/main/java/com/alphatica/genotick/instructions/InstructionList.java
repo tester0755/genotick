@@ -18,13 +18,13 @@ public class InstructionList implements Serializable {
     private final double[] variables;
 
     private int validateVariableNumber(int index) {
-        return (index < 0 ? -index : index) % variablesCount;
+        return Math.abs(index % variablesCount);
     }
 
     private InstructionList() {
         random = RandomGenerator.assignRandom();
         list = new ArrayList<>();
-        variablesCount = Math.abs(random.nextInt() % 1024);
+        variablesCount = 1 + Math.abs(random.nextInt() % 1024);
         variables = new double[variablesCount];
     }
 
