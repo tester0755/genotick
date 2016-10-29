@@ -92,7 +92,7 @@ public class SimpleEngine implements Engine {
     }
 
     private String getSavedPopulationDirName() {
-        return "savedPopulation_" + DataUtils.getDateTimeString();
+        return "savedPopulation_" + Tools.getPidString();
     }
 
     private void initPopulation() {

@@ -5,6 +5,7 @@ import com.alphatica.genotick.genotick.Prediction;
 import com.alphatica.genotick.timepoint.TimePoint;
 
 class ConsoleOutput implements UserOutput {
+
     @Override
     public void errorMessage(String message) {
         System.out.println("Error: " + message);
@@ -30,13 +31,9 @@ class ConsoleOutput implements UserOutput {
 
     @Override
     public Thread.UncaughtExceptionHandler createExceptionHandler() {
-        return new Thread.UncaughtExceptionHandler() {
-
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                System.out.println("Exception in thread: " + thread.getName());
-                throwable.printStackTrace();
-            }
+        return (thread, throwable) -> {
+            System.out.println("Exception in thread: " + thread.getName());
+            throwable.printStackTrace();
         };
     }
 

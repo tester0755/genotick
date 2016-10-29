@@ -57,6 +57,7 @@ public class Simulation {
             settings.validate();
             return true;
         } catch(IllegalArgumentException ex) {
+            ex.printStackTrace();
             output.errorMessage(ex.getMessage());
             return false;
         }
@@ -139,7 +140,7 @@ public class Simulation {
             result *= percent / 100.0 + 1;
         }
         showStatsResults(statsResults);
-        output.infoMessage("Final result for genotic: " + result);
+        output.infoMessage("Final result for genotick: " + result);
     }
 
     private void recordSetsProfit(TimePointStats stats, Map<DataSetName, Double> statsResults) {

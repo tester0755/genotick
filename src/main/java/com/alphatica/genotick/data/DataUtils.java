@@ -32,12 +32,7 @@ public class DataUtils {
 
     private static List<String> getFullPaths(String path, final String extension) {
         File file = new File(path);
-        String [] names = file.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(extension);
-            }
-        });
+        String [] names = file.list((file1, name) -> name.endsWith(extension));
         List<String> list = new ArrayList<>();
         for(String name: names) {
             list.add(path + File.separator + name);

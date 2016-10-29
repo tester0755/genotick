@@ -4,12 +4,13 @@ import com.alphatica.genotick.data.MainAppData;
 import com.alphatica.genotick.genotick.Main;
 import com.alphatica.genotick.genotick.MainSettings;
 import com.alphatica.genotick.genotick.RandomGenerator;
+import com.alphatica.genotick.timepoint.TimePoint;
 
 import java.util.Random;
 
 @SuppressWarnings("unused")
 class RandomParametersInput extends BasicUserInput {
-
+    private Random r = RandomGenerator.assignRandom();
 
     @Override
     public MainSettings getSettings(UserOutput output) {
@@ -19,16 +20,23 @@ class RandomParametersInput extends BasicUserInput {
         defaults.killNonPredictingRobots = true;
         defaults.performTraining = true;
         MainAppData data = getData(Main.DEFAULT_DATA_DIR,output);
-        defaults.startTimePoint = data.getFirstTimePoint();
-        defaults.endTimePoint = data.getLastTimePoint();
+        assignTimePoints(defaults, data);
         return assignRandom(defaults);
     }
 
+    private void assignTimePoints(MainSettings defaults, MainAppData data) {
+        TimePoint first = data.getFirstTimePoint();
+        TimePoint last = data.getLastTimePoint();
+        long diff = last.getValue() - first.getValue();
+        long count = Math.abs(r.nextLong() % diff);
+        defaults.startTimePoint = new TimePoint(last.getValue() - count);
+        defaults.endTimePoint = last;
+    }
+
     private MainSettings assignRandom(MainSettings settings) {
-        Random r = RandomGenerator.assignRandom();
-        settings.populationDesiredSize = r.nextInt(5000);
-        settings.dataMaximumOffset = r.nextInt(256);
-        settings.processorInstructionLimit = r.nextInt(256)+1;
+
+        settings.dataMaximumOffset = r.nextInt(256) + 1;
+        settings.processorInstructionLimit = r.nextInt(256) + 1;
         settings.maximumDeathByAge = r.nextDouble();
         settings.maximumDeathByWeight = r.nextDouble();
         settings.probabilityOfDeathByAge = r.nextDouble();
@@ -44,6 +52,7 @@ class RandomParametersInput extends BasicUserInput {
         settings.randomRobotsAtEachUpdate = r.nextDouble();
         settings.resultThreshold = 1 + (r.nextDouble() * 9);
         return settings;
+
     }
 
 }

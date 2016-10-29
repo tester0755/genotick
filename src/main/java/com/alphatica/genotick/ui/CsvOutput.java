@@ -2,10 +2,13 @@ package com.alphatica.genotick.ui;
 
 import com.alphatica.genotick.data.DataSetName;
 import com.alphatica.genotick.genotick.Prediction;
+import com.alphatica.genotick.genotick.Tools;
 import com.alphatica.genotick.timepoint.TimePoint;
 
-import java.io.*;
-import java.lang.management.ManagementFactory;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class CsvOutput implements UserOutput {
     private final ConsoleOutput console;
@@ -15,7 +18,7 @@ public class CsvOutput implements UserOutput {
 
     public CsvOutput() throws IOException {
         console = new ConsoleOutput();
-        pidString = getPidString();
+        pidString = Tools.getPidString();
         profitWriter = new SimpleTextWriter("profit_" + pidString + ".csv");
         predictionWriter = new SimpleTextWriter("predictions_" + pidString + ".csv");
     }
@@ -52,14 +55,6 @@ public class CsvOutput implements UserOutput {
         console.infoMessage(s);
     }
 
-    private String getPidString() {
-        String pid = ManagementFactory.getRuntimeMXBean().getName();
-        if (pid.contains("@")) {
-            return pid.substring(0, pid.indexOf('@'));
-        } else {
-            return pid;
-        }
-    }
 }
 
 class SimpleTextWriter {

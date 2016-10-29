@@ -37,9 +37,7 @@ public class Reversal {
         return reversedData;
     }
     private void reverseData(MainAppData data) {
-        for (DataSet set : data.listSets()) {
-            reverseSet(set);
-        }
+        data.listSets().forEach(this::reverseSet);
     }
 
     private void reverseSet(DataSet set) {

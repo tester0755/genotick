@@ -49,13 +49,12 @@ class SimpleTimePointExecutor implements TimePointExecutor {
                 Future<List<RobotResult>> future = tasks.get(lastIndex);
                 List<RobotResult> results = future.get();
                 tasks.remove(lastIndex);
-                for(RobotResult result: results) {
-                    timePointResult.addRobotResult(result);
-                }
+                results.forEach(timePointResult::addRobotResult);
             } catch (InterruptedException ignore) {
                 /* Do nothing, try again */
             } catch (ExecutionException e) {
                 output.errorMessage(e.getMessage());
+                e.printStackTrace();
                 System.exit(1);
             }
         }
