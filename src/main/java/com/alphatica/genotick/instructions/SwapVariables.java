@@ -3,9 +3,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class SwapVariables extends VarVarInstruction  implements Serializable {
+public class SwapVariables extends VarVarInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -6328103475159894381L;
 

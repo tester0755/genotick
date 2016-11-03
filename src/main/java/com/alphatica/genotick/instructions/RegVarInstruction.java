@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.mutator.Mutator;
 
-import java.io.Serializable;
-
-abstract class RegVarInstruction extends RegInstruction implements Serializable {
+abstract class RegVarInstruction extends RegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 2162434928345582409L;
 

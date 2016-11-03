@@ -1,6 +1,5 @@
 package com.alphatica.genotick.instructions;
 
-
 import com.alphatica.genotick.mutator.Mutator;
 import com.alphatica.genotick.processor.Processor;
 
@@ -10,7 +9,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Instruction  implements Serializable {
+public abstract class Instruction implements Serializable {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 6038774498356414583L;
 

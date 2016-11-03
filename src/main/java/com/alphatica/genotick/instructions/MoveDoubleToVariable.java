@@ -3,9 +3,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class MoveDoubleToVariable extends VarDoubleInstruction  implements Serializable {
+public class MoveDoubleToVariable extends VarDoubleInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -1120463586513743256L;
 

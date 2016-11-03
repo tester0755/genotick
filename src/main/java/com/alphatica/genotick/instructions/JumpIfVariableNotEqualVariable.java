@@ -4,7 +4,7 @@ import com.alphatica.genotick.processor.Processor;
 
 import java.io.Serializable;
 
-public class JumpIfVariableNotEqualVariable extends VarVarJumpInstruction implements Serializable{
+public class JumpIfVariableNotEqualVariable extends VarVarJumpInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 3271032134612877777L;
 

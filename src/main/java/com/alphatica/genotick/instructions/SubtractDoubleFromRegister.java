@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class SubtractDoubleFromRegister extends RegDoubleInstruction implements Serializable {
+public class SubtractDoubleFromRegister extends RegDoubleInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 8867925324160720308L;
 

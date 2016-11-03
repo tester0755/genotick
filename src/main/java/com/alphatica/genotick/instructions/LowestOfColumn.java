@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class LowestOfColumn extends RegRegInstruction implements Serializable {
+public class LowestOfColumn extends RegRegInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -6945803435707758563L;

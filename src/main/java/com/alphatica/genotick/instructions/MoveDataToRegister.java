@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class MoveDataToRegister extends DataRegInstruction implements Serializable {
+public class MoveDataToRegister extends DataRegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 6441937261061215492L;
 
