@@ -6,6 +6,9 @@ import com.alphatica.genotick.instructions.*;
 import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotExecutor;
 import com.alphatica.genotick.population.RobotExecutorSettings;
+import java.util.Arrays;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
 
 public class SimpleProcessor extends Processor implements RobotExecutor {
 
@@ -65,9 +68,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     }
 
     private void zeroOutRegisters() {
-        for(int i = 0; i < registers.length; i++) {
-            registers[i] = 0.0;
-        }
+        Arrays.fill(ofNullable(registers).get(), 0.0);
     }
 
     private Prediction executeRobotMain()  {
