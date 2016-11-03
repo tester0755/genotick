@@ -7,6 +7,8 @@ import com.alphatica.genotick.data.MainAppData;
 import com.alphatica.genotick.ui.UserOutput;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Reversal {
@@ -53,18 +55,10 @@ public class Reversal {
     }
 
     private static String getReverseFileName(DataSetName name) {
-        String [] pathParts = name.getName().split(File.separator);
-        int lastPart = pathParts.length - 1;
-        String newName = "reverse_" + pathParts[lastPart];
-        pathParts[lastPart] = newName;
-        StringBuilder sb = new StringBuilder();
-        for(String part: pathParts) {
-            sb.append(part);
-            if(!part.equals(pathParts[lastPart])) {
-                sb.append(File.separator);
-            }
-        }
-        return sb.toString();
+        Path full = Paths.get(name.getName());
+        Path parent = full.getParent();
+        String newName = "reverse_" + full.getFileName().toString();
+        return Paths.get(parent.toString(), newName).toString();
     }
 
     private static List<Number[]> reverseList(List<Number[]> original) {
