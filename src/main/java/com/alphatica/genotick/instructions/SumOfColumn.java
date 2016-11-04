@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class SumOfColumn extends RegRegInstruction implements Serializable {
+public class SumOfColumn extends RegRegInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -4448791341243829694L;

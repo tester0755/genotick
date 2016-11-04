@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class NaturalLogarithmOfRegister extends RegRegInstruction  implements Serializable {
+public class NaturalLogarithmOfRegister extends RegRegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -5965927479237202603L;
 

@@ -10,12 +10,6 @@ class AbsoluteWeightComparator implements Comparator<RobotInfo>, Serializable {
 
     @Override
     public int compare(RobotInfo robotInfo1, RobotInfo robotInfo2) {
-        double diff = Math.abs(robotInfo1.getWeight()) - Math.abs(robotInfo2.getWeight());
-        if (diff > 0)
-            return 1;
-        else if (diff < 0)
-            return -1;
-        else
-            return 0;
+        return Double.compare(robotInfo1.getWeight(), robotInfo2.getWeight());
     }
 }

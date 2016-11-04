@@ -3,9 +3,7 @@ package com.alphatica.genotick.instructions;
 import com.alphatica.genotick.processor.NotEnoughDataException;
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class DecrementVariable extends VarInstruction implements Serializable {
+public class DecrementVariable extends VarInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3260981819622564798L;
 

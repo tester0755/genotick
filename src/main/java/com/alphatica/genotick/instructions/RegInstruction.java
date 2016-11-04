@@ -4,7 +4,7 @@ import com.alphatica.genotick.mutator.Mutator;
 
 import java.io.Serializable;
 
-abstract class RegInstruction extends Instruction implements Serializable {
+abstract class RegInstruction extends Instruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -5825464773734754580L;
 

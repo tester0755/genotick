@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class SqRootOfVariable extends VarVarInstruction  implements Serializable {
+public class SqRootOfVariable extends VarVarInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -6025395017177611705L;
 

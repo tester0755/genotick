@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class NaturalLogarithmOfVariable extends VarVarInstruction  implements Serializable {
+public class NaturalLogarithmOfVariable extends VarVarInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3112125542251877233L;
 

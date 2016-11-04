@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class JumpIfRegisterNotEqualZero extends RegJumpInstruction implements Serializable{
+public class JumpIfRegisterNotEqualZero extends RegJumpInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -6429106660478254250L;
 

@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class DivideRegisterByVariable extends RegVarInstruction implements Serializable {
+public class DivideRegisterByVariable extends RegVarInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7846370685515767796L;
 
