@@ -292,6 +292,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void execute(JumpTo ins) {
+        newJump = true;
         jumpTo(ins.getAddress());
     }
     private void jumpTo(int jumpAddress) {
