@@ -12,7 +12,7 @@ import static java.util.Optional.ofNullable;
 public class SimpleProcessor extends Processor implements RobotExecutor {
 
     private static final int MAX_JUMP = 255;
-    private double[] registers;
+    private final double[] registers = new double[totalRegisters];
     private Robot robot;
     private RobotData data;
     private int dataColumns;
@@ -47,7 +47,6 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void setSettings(RobotExecutorSettings settings) {
-        registers = new double[totalRegisters];
         instructionLimitMultiplier = settings.instructionLimit;
     }
 
@@ -67,8 +66,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     }
 
     private void zeroOutRegisters() {
-        // TODO: fix NoSuchElementException (was NPE)
-        Arrays.fill(ofNullable(registers).get(), 0.0);
+        Arrays.fill(registers, 0.0);
     }
 
     private Prediction executeRobotMain()  {
