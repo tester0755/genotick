@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class DivideVariableByDouble extends VarDoubleInstruction implements Serializable {
+public class DivideVariableByDouble extends VarDoubleInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 2277032167143213475L;
 

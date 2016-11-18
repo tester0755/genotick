@@ -3,9 +3,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class MoveVariableToRegister extends RegVarInstruction  implements Serializable {
+public class MoveVariableToRegister extends RegVarInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3943721532302613198L;
 

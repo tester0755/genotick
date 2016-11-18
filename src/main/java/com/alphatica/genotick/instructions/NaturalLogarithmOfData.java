@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class NaturalLogarithmOfData extends DataRegInstruction  implements Serializable {
+public class NaturalLogarithmOfData extends DataRegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -3598160310785452494L;
 

@@ -6,6 +6,8 @@ import com.alphatica.genotick.instructions.*;
 import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotExecutor;
 import com.alphatica.genotick.population.RobotExecutorSettings;
+import java.util.Arrays;
+import static java.util.Optional.ofNullable;
 
 public class SimpleProcessor extends Processor implements RobotExecutor {
 
@@ -65,9 +67,8 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     }
 
     private void zeroOutRegisters() {
-        for(int i = 0; i < registers.length; i++) {
-            registers[i] = 0.0;
-        }
+        // TODO: fix NoSuchElementException (was NPE)
+        Arrays.fill(ofNullable(registers).get(), 0.0);
     }
 
     private Prediction executeRobotMain()  {
@@ -291,6 +292,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void execute(JumpTo ins) {
+        newJump = true;
         jumpTo(ins.getAddress());
     }
     private void jumpTo(int jumpAddress) {
@@ -319,7 +321,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfVariableEqualRegister ins) {
         double register = registers[ins.getRegister()];
         double variable = instructionList.getVariable(ins.getVariableArgument());
-        if(variable == register) {
+        if(0 == Double.compare(variable, register)) {
             jumpTo(ins.getAddress());
         }
     }
@@ -328,7 +330,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfVariableNotEqualRegister ins) {
         double register = registers[ins.getRegister()];
         double variable = instructionList.getVariable(ins.getVariableArgument());
-        if(register != variable) {
+        if(0 != Double.compare(variable, register)) {
             jumpTo(ins.getAddress());
         }
     }
@@ -337,7 +339,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfRegisterEqualRegister ins) {
         double register1 = registers[ins.getRegister1()];
         double register2 = registers[ins.getRegister2()];
-        if(register1 == register2) {
+        if(0 == Double.compare(register1, register2)) {
             jumpTo(ins.getAddress());
         }
     }
@@ -346,7 +348,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfRegisterNotEqualRegister ins) {
         double register1 = registers[ins.getRegister1()];
         double register2 = registers[ins.getRegister2()];
-        if(register1 != register2) {
+        if(0 != Double.compare(register1, register2)) {
             jumpTo(ins.getAddress());
         }
     }
@@ -355,7 +357,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfRegisterGreaterThanRegister ins) {
         double register1 = registers[ins.getRegister1()];
         double register2 = registers[ins.getRegister2()];
-        if(register1 > register2) {
+        if(Double.compare(register1, register2) > 0) {
             jumpTo(ins.getAddress());
         }
     }
@@ -364,7 +366,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfRegisterLessThanRegister ins) {
         double register1 = registers[ins.getRegister1()];
         double register2 = registers[ins.getRegister2()];
-        if(register1 < register2) {
+        if(Double.compare(register1, register2) < 0) {
             jumpTo(ins.getAddress());
         }
     }
@@ -373,7 +375,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfVariableGreaterThanVariable ins) {
         double variable1 = instructionList.getVariable(ins.getVariable1Argument());
         double variable2 = instructionList.getVariable(ins.getVariable2Argument());
-        if(variable1 > variable2) {
+        if(Double.compare(variable1, variable2) > 0) {
             jumpTo(ins.getAddress());
         }
     }
@@ -382,7 +384,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfVariableLessThanVariable ins) {
         double variable1 = instructionList.getVariable(ins.getVariable1Argument());
         double variable2 = instructionList.getVariable(ins.getVariable2Argument());
-        if(variable1 < variable2) {
+        if(Double.compare(variable1, variable2) < 0) {
             jumpTo(ins.getAddress());
         }
     }
@@ -391,7 +393,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfVariableEqualVariable ins) {
         double variable1 = instructionList.getVariable(ins.getVariable1Argument());
         double variable2 = instructionList.getVariable(ins.getVariable2Argument());
-        if(variable1 == variable2) {
+        if(0 == Double.compare(variable1, variable2)) {
             jumpTo(ins.getAddress());
         }
     }
@@ -400,7 +402,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     public void execute(JumpIfVariableNotEqualVariable ins) {
         double variable1 = instructionList.getVariable(ins.getVariable1Argument());
         double variable2 = instructionList.getVariable(ins.getVariable2Argument());
-        if(variable1 != variable2) {
+        if(0 != Double.compare(variable1, variable2)) {
             jumpTo(ins.getAddress());
         }
     }
@@ -408,7 +410,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(JumpIfVariableGreaterThanDouble ins) {
         double variable = instructionList.getVariable(ins.getVariableArgument());
-        if(variable > ins.getDoubleArgument()) {
+        if(Double.compare(variable, ins.getDoubleArgument()) > 0) {
             jumpTo(ins.getAddress());
         }
     }
@@ -416,7 +418,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(JumpIfVariableLessThanDouble ins) {
         double variable = instructionList.getVariable(ins.getVariableArgument());
-        if(variable < ins.getDoubleArgument()) {
+        if(Double.compare(variable, ins.getDoubleArgument()) < 0) {
             jumpTo(ins.getAddress());
         }
     }
@@ -424,7 +426,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(JumpIfVariableEqualDouble ins) {
         double variable = instructionList.getVariable(ins.getVariableArgument());
-        if(variable == ins.getDoubleArgument()) {
+        if(0 == Double.compare(variable, ins.getDoubleArgument())) {
             jumpTo(ins.getAddress());
         }
     }
@@ -432,7 +434,7 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(JumpIfVariableNotEqualDouble ins) {
         double variable = instructionList.getVariable(ins.getVariableArgument());
-        if(variable != ins.getDoubleArgument()) {
+        if(0 != Double.compare(variable, ins.getDoubleArgument())) {
             jumpTo(ins.getAddress());
         }
     }
@@ -440,28 +442,28 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     @Override
     public void execute(JumpIfRegisterGreaterThanDouble ins) {
         double register = registers[ins.getRegister()];
-        if(register > ins.getDoubleArgument())
+        if(Double.compare(register, ins.getDoubleArgument()) > 0)
             jumpTo(ins.getAddress());
     }
 
     @Override
     public void execute(JumpIfRegisterLessThanDouble ins) {
         double register = registers[ins.getRegister()];
-        if(register < ins.getDoubleArgument())
+        if(Double.compare(register, ins.getDoubleArgument()) < 0)
             jumpTo(ins.getAddress());
     }
 
     @Override
     public void execute(JumpIfRegisterEqualDouble ins) {
         double register = registers[ins.getRegister()];
-        if(register == ins.getDoubleArgument())
+        if(0 == Double.compare(register, ins.getDoubleArgument()))
             jumpTo(ins.getAddress());
     }
 
     @Override
     public void execute(JumpIfRegisterNotEqualDouble ins) {
         double register = registers[ins.getRegister()];
-        if(register != ins.getDoubleArgument())
+        if(0 != Double.compare(register, ins.getDoubleArgument()))
             jumpTo(ins.getAddress());
     }
 

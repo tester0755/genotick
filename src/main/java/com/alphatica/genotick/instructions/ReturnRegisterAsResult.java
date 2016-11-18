@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class ReturnRegisterAsResult extends RegInstruction implements Serializable {
+public class ReturnRegisterAsResult extends RegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -884883538461289844L;
 

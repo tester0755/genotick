@@ -4,7 +4,7 @@ import com.alphatica.genotick.processor.Processor;
 
 import java.io.Serializable;
 
-public class AverageOfColumn extends RegRegInstruction implements Serializable {
+public class AverageOfColumn extends RegRegInstruction {
 
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -329518949586814597L;

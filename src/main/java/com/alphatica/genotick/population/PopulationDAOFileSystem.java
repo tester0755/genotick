@@ -1,7 +1,6 @@
 package com.alphatica.genotick.population;
 
 import com.alphatica.genotick.genotick.RandomGenerator;
-import com.alphatica.genotick.ui.UserOutput;
 
 import java.io.*;
 import java.util.ArrayList;

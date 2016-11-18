@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class MoveRelativeDataToVariable extends DataVarInstruction  implements Serializable {
+public class MoveRelativeDataToVariable extends DataVarInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 1308815201295846632L;
 

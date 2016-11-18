@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class MultiplyRegisterByDouble extends RegDoubleInstruction  implements Serializable {
+public class MultiplyRegisterByDouble extends RegDoubleInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 7017210446264669933L;
 

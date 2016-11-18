@@ -2,9 +2,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.mutator.Mutator;
 
-import java.io.Serializable;
-
-abstract class VarJumpInstruction extends VarInstruction implements JumpInstruction, Serializable {
+abstract class VarJumpInstruction extends VarInstruction implements JumpInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7018453916150975326L;
 

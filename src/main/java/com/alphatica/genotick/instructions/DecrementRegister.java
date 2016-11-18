@@ -3,9 +3,7 @@ package com.alphatica.genotick.instructions;
 
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class DecrementRegister extends RegInstruction implements Serializable {
+public class DecrementRegister extends RegInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -7630060970364313126L;
 

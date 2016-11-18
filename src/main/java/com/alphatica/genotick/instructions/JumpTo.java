@@ -4,9 +4,7 @@ import com.alphatica.genotick.mutator.Mutator;
 import com.alphatica.genotick.processor.NotEnoughDataException;
 import com.alphatica.genotick.processor.Processor;
 
-import java.io.Serializable;
-
-public class JumpTo extends Instruction implements JumpInstruction, Serializable {
+public class JumpTo extends Instruction implements JumpInstruction {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 8996188434274451095L;
 
