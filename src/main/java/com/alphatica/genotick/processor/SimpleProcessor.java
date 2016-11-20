@@ -82,13 +82,13 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
         list.zeroOutVariables();
         terminateInstructionList = false;
         int instructionPointer = 0;
+        instructionList = list;
         do {
             Instruction instruction = list.getInstruction(instructionPointer++);
-            instructionList = list; /* Set this every time - it could have been changed by recursive function call */
             instruction.executeOn(this);
             totalInstructionExecuted++;
             if(totalInstructionExecuted > robotInstructionLimit) {
-                throw new TooManyInstructionsExecuted();
+                break;
             }
             if(newJump) {
                 newJump = false;
