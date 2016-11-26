@@ -2,12 +2,95 @@ package com.alphatica.genotick.processor;
 
 import com.alphatica.genotick.genotick.Prediction;
 import com.alphatica.genotick.genotick.RobotData;
-import com.alphatica.genotick.instructions.*;
+import com.alphatica.genotick.instructions.AddDoubleToRegister;
+import com.alphatica.genotick.instructions.AddDoubleToVariable;
+import com.alphatica.genotick.instructions.AddRegisterToRegister;
+import com.alphatica.genotick.instructions.AddRegisterToVariable;
+import com.alphatica.genotick.instructions.AddVariableToVariable;
+import com.alphatica.genotick.instructions.AverageOfColumn;
+import com.alphatica.genotick.instructions.DataInstruction;
+import com.alphatica.genotick.instructions.DecrementRegister;
+import com.alphatica.genotick.instructions.DecrementVariable;
+import com.alphatica.genotick.instructions.DivideRegisterByDouble;
+import com.alphatica.genotick.instructions.DivideRegisterByRegister;
+import com.alphatica.genotick.instructions.DivideRegisterByVariable;
+import com.alphatica.genotick.instructions.DivideVariableByDouble;
+import com.alphatica.genotick.instructions.DivideVariableByRegister;
+import com.alphatica.genotick.instructions.DivideVariableByVariable;
+import com.alphatica.genotick.instructions.HighestOfColumn;
+import com.alphatica.genotick.instructions.IncrementRegister;
+import com.alphatica.genotick.instructions.IncrementVariable;
+import com.alphatica.genotick.instructions.Instruction;
+import com.alphatica.genotick.instructions.InstructionList;
+import com.alphatica.genotick.instructions.JumpIfRegisterEqualDouble;
+import com.alphatica.genotick.instructions.JumpIfRegisterEqualRegister;
+import com.alphatica.genotick.instructions.JumpIfRegisterEqualZero;
+import com.alphatica.genotick.instructions.JumpIfRegisterGreaterThanDouble;
+import com.alphatica.genotick.instructions.JumpIfRegisterGreaterThanRegister;
+import com.alphatica.genotick.instructions.JumpIfRegisterGreaterThanZero;
+import com.alphatica.genotick.instructions.JumpIfRegisterLessThanDouble;
+import com.alphatica.genotick.instructions.JumpIfRegisterLessThanRegister;
+import com.alphatica.genotick.instructions.JumpIfRegisterLessThanZero;
+import com.alphatica.genotick.instructions.JumpIfRegisterNotEqualDouble;
+import com.alphatica.genotick.instructions.JumpIfRegisterNotEqualRegister;
+import com.alphatica.genotick.instructions.JumpIfRegisterNotEqualZero;
+import com.alphatica.genotick.instructions.JumpIfVariableEqualDouble;
+import com.alphatica.genotick.instructions.JumpIfVariableEqualRegister;
+import com.alphatica.genotick.instructions.JumpIfVariableEqualVariable;
+import com.alphatica.genotick.instructions.JumpIfVariableEqualZero;
+import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanDouble;
+import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanRegister;
+import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanVariable;
+import com.alphatica.genotick.instructions.JumpIfVariableGreaterThanZero;
+import com.alphatica.genotick.instructions.JumpIfVariableLessThanDouble;
+import com.alphatica.genotick.instructions.JumpIfVariableLessThanRegister;
+import com.alphatica.genotick.instructions.JumpIfVariableLessThanVariable;
+import com.alphatica.genotick.instructions.JumpIfVariableLessThanZero;
+import com.alphatica.genotick.instructions.JumpIfVariableNotEqualDouble;
+import com.alphatica.genotick.instructions.JumpIfVariableNotEqualRegister;
+import com.alphatica.genotick.instructions.JumpIfVariableNotEqualVariable;
+import com.alphatica.genotick.instructions.JumpIfVariableNotEqualZero;
+import com.alphatica.genotick.instructions.JumpTo;
+import com.alphatica.genotick.instructions.LowestOfColumn;
+import com.alphatica.genotick.instructions.MoveDataToRegister;
+import com.alphatica.genotick.instructions.MoveDataToVariable;
+import com.alphatica.genotick.instructions.MoveDoubleToRegister;
+import com.alphatica.genotick.instructions.MoveDoubleToVariable;
+import com.alphatica.genotick.instructions.MoveRegisterToRegister;
+import com.alphatica.genotick.instructions.MoveRegisterToVariable;
+import com.alphatica.genotick.instructions.MoveRelativeDataToRegister;
+import com.alphatica.genotick.instructions.MoveRelativeDataToVariable;
+import com.alphatica.genotick.instructions.MoveVariableToRegister;
+import com.alphatica.genotick.instructions.MoveVariableToVariable;
+import com.alphatica.genotick.instructions.MultiplyRegisterByDouble;
+import com.alphatica.genotick.instructions.MultiplyRegisterByRegister;
+import com.alphatica.genotick.instructions.MultiplyRegisterByVariable;
+import com.alphatica.genotick.instructions.MultiplyVariableByDouble;
+import com.alphatica.genotick.instructions.MultiplyVariableByVariable;
+import com.alphatica.genotick.instructions.NaturalLogarithmOfData;
+import com.alphatica.genotick.instructions.NaturalLogarithmOfRegister;
+import com.alphatica.genotick.instructions.NaturalLogarithmOfVariable;
+import com.alphatica.genotick.instructions.ReturnRegisterAsResult;
+import com.alphatica.genotick.instructions.ReturnVariableAsResult;
+import com.alphatica.genotick.instructions.SqRootOfRegister;
+import com.alphatica.genotick.instructions.SqRootOfVariable;
+import com.alphatica.genotick.instructions.SubtractDoubleFromRegister;
+import com.alphatica.genotick.instructions.SubtractDoubleFromVariable;
+import com.alphatica.genotick.instructions.SubtractRegisterFromRegister;
+import com.alphatica.genotick.instructions.SubtractRegisterFromVariable;
+import com.alphatica.genotick.instructions.SubtractVariableFromRegister;
+import com.alphatica.genotick.instructions.SubtractVariableFromVariable;
+import com.alphatica.genotick.instructions.SumOfColumn;
+import com.alphatica.genotick.instructions.SwapRegisters;
+import com.alphatica.genotick.instructions.SwapVariables;
+import com.alphatica.genotick.instructions.TerminateInstructionList;
+import com.alphatica.genotick.instructions.ZeroOutRegister;
+import com.alphatica.genotick.instructions.ZeroOutVariable;
 import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotExecutor;
 import com.alphatica.genotick.population.RobotExecutorSettings;
+
 import java.util.Arrays;
-import static java.util.Optional.ofNullable;
 
 public class SimpleProcessor extends Processor implements RobotExecutor {
 
@@ -21,7 +104,6 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
     private InstructionList instructionList;
     private boolean terminateInstructionList;
     private int changeInstructionPointer;
-    private boolean newJump;
     private int totalInstructionExecuted;
     private int instructionLimitMultiplier;
     private int robotInstructionLimit;
@@ -58,7 +140,6 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
         instructionList = null;
         terminateInstructionList = false;
         changeInstructionPointer = 0;
-        newJump = false;
         totalInstructionExecuted = 0;
         dataMaximumOffset = robot.getMaximumDataOffset();
         ignoreColumns = robot.getIgnoreColumns();
@@ -90,15 +171,8 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
             if(totalInstructionExecuted > robotInstructionLimit) {
                 break;
             }
-            if(newJump) {
-                newJump = false;
-                int newPointer = instructionPointer + changeInstructionPointer;
-                if(newPointer > instructionList.getSize())
-                    newPointer = instructionPointer + 1;
-                if(newPointer < 0)
-                    newPointer = 0;
-                instructionPointer = newPointer;
-            }
+            instructionPointer =  Math.abs((instructionPointer + changeInstructionPointer) % instructionList.getSize());
+            changeInstructionPointer = 0;
         } while (!terminateInstructionList && !finished);
     }
 
@@ -290,7 +364,6 @@ public class SimpleProcessor extends Processor implements RobotExecutor {
 
     @Override
     public void execute(JumpTo ins) {
-        newJump = true;
         jumpTo(ins.getAddress());
     }
     private void jumpTo(int jumpAddress) {
