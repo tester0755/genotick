@@ -92,8 +92,6 @@ class SimpleRobotKiller implements RobotKiller {
     }
 
     private void killRobotsByWeight(Population population, List<RobotInfo> listCopy, List<RobotInfo> originalList) {
-        if(population.haveSpaceToBreed())
-            return;
         Collections.sort(listCopy, RobotInfo.comparatorByAbsoluteWeight);
         Collections.reverse(listCopy);
         int numberToKill = (int) Math.round(settings.maximumDeathByWeight * originalList.size());
