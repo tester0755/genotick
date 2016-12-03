@@ -15,6 +15,7 @@ public class CsvOutput implements UserOutput {
     private final SimpleTextWriter profitWriter;
     private final SimpleTextWriter predictionWriter;
     private final String pidString;
+    private Boolean debug = false;
 
     public CsvOutput() throws IOException {
         console = new ConsoleOutput();
@@ -54,6 +55,22 @@ public class CsvOutput implements UserOutput {
     public void infoMessage(String s) {
         console.infoMessage(s);
     }
+
+	@Override
+	public void setDebug(Boolean debug) {
+		this.debug = debug;		
+	}
+
+	@Override
+	public Boolean getDebug() {		
+		return this.debug;
+	}
+
+	@Override
+	public void debugMessage(String message) {
+		if(this.debug)
+			console.infoMessage(message);		
+	}
 
 }
 

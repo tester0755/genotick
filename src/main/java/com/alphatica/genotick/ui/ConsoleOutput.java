@@ -12,7 +12,8 @@ import java.io.IOException;
 class ConsoleOutput implements UserOutput {
 
     private File logFile = new File(String.format("genotick-log-%s.txt", Tools.getPidString()));
-
+    private Boolean debug = true;    
+    
     @Override
     public void errorMessage(String message) {
         log("Error: " + message);
@@ -60,5 +61,22 @@ class ConsoleOutput implements UserOutput {
             System.exit(1);
         }
     }
+
+	@Override
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
+		
+	}
+
+	@Override
+	public Boolean getDebug() {
+		return this.debug;		
+	}
+
+	@Override
+	public void debugMessage(String message) {
+		if(this.debug)
+			log(message);		
+	}
 
 }
