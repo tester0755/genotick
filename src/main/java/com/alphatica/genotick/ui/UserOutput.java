@@ -5,9 +5,16 @@ import com.alphatica.genotick.genotick.Prediction;
 import com.alphatica.genotick.timepoint.TimePoint;
 
 public interface UserOutput {
+	
+	void setDebug(Boolean debug);
+	
+	Boolean getDebug();	
+	
     void errorMessage(String message);
 
     void warningMessage(String message);
+    
+    void debugMessage(String message);
 
     void reportProfitForTimePoint(TimePoint timePoint, double cumulativeProfit, double timePointProfit);
 
