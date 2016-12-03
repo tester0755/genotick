@@ -18,6 +18,7 @@ class FileInput extends BasicUserInput {
     static final String delimiter = ":";
     private static final String DATA_DIRECTORY_KEY = "dataDirectory";
     private String fileName;
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
 
     FileInput(String input) {
         if(!input.contains(delimiter))
@@ -26,12 +27,12 @@ class FileInput extends BasicUserInput {
         fileName = input.substring(pos+1);
     }
     @Override
-    public MainSettings getSettings(UserOutput output) {
+    public MainSettings getSettings() {
         Set<String> parsedKeys = new HashSet<>();
         try {
             Map<String,String> map = buildFileMap();
             MainSettings settings = MainSettings.getSettings();
-            MainAppData data = createData(map,parsedKeys,output);
+            MainAppData data = createData(map,parsedKeys);
             settings.startTimePoint = data.getFirstTimePoint();
             settings.endTimePoint = data.getLastTimePoint();
             settings.dataSettings = getDataDir(map,parsedKeys);
@@ -108,9 +109,9 @@ class FileInput extends BasicUserInput {
     }
 
 
-    private MainAppData createData(Map<String, String> map, Set<String> parsedKeys, UserOutput output) {
+    private MainAppData createData(Map<String, String> map, Set<String> parsedKeys) {
         String dataDir = getDataDir(map,parsedKeys);
-        return getData(dataDir,output);
+        return getData(dataDir);
     }
 
     private String getDataDir(Map<String, String> map, Set<String> parsedKeys) {

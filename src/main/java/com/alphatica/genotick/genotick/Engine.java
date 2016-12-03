@@ -11,7 +11,7 @@ import com.alphatica.genotick.ui.UserOutput;
 import java.util.List;
 
 public interface Engine {
-    List<TimePointStats> start(UserOutput output);
+    List<TimePointStats> start();
 
     void setSettings(EngineSettings engineSettings, TimePointExecutor timePointExecutor, MainAppData data, RobotKiller killer, RobotBreeder breeder, Population population);
 }

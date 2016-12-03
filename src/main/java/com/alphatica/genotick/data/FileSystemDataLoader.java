@@ -1,7 +1,7 @@
 package com.alphatica.genotick.data;
 
 
-import com.alphatica.genotick.ui.UserOutput;
+import com.alphatica.genotick.ui.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,17 +11,17 @@ import java.util.List;
 
 public class FileSystemDataLoader implements DataLoader {
     private final String [] paths;
-
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
     public FileSystemDataLoader(String... args) {
         paths = args;
     }
 
     @Override
-    public MainAppData createRobotData(UserOutput output) throws DataException {
-        return loadData(output);
+    public MainAppData createRobotData() throws DataException {
+        return loadData();
     }
 
-    private MainAppData loadData(UserOutput output) {
+    private MainAppData loadData() {
         MainAppData data = new MainAppData();
         String extension = ".csv";
         List<String> names = DataUtils.listFiles(extension,paths);
@@ -30,7 +30,7 @@ public class FileSystemDataLoader implements DataLoader {
         }
         for (String name : names) {
             output.infoMessage("Reading file " + name);
-            data.addDataSet(createDataSet(name,output));
+            data.addDataSet(createDataSet(name));
         }
         if(data.isEmpty()) {
             throw new DataException("No files to read!");
@@ -38,7 +38,7 @@ public class FileSystemDataLoader implements DataLoader {
         return data;
 
     }
-    private DataSet createDataSet(String name, UserOutput output) {
+    private DataSet createDataSet(String name) {
         try(BufferedReader br = new BufferedReader(new FileReader(new File(name)))) {
             List<Number []> lines = DataUtils.createLineList(br);
             output.infoMessage("Got " + lines.size() + " lines");
