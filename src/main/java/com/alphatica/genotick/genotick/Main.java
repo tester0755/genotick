@@ -25,6 +25,7 @@ public class Main {
 
     public static void main(String... args) throws IOException, IllegalAccessException {
         Parameters parameters = new Parameters(args);
+        checkHelp(parameters);
         checkVersionRequest(parameters);
         checkShowPopulation(parameters);
         checkShowRobot(parameters);
@@ -138,6 +139,31 @@ public class Main {
     private static void checkVersionRequest(Parameters parameters) {
         if(parameters.getValue("showVersion") != null) {
             System.out.println(Main.VERSION);
+            System.exit(0);
+        }
+    }
+    
+    private static void checkHelp(Parameters parameters) {
+        if(parameters.getValue("help") != null
+        		|| parameters.getValue("--help") != null
+        		|| parameters.getValue("-h") != null) {
+        	System.out.print("Displaying version: ");
+        	System.out.println("	java -jar Genotick-version.jar showVersion");
+        	System.out.print("Reversing data: ");
+        	System.out.println("	java -jar Genotick-version.jar reverse=mydata");
+        	System.out.print("Inputs from a file: ");
+        	System.out.println("	java -jar Genotick-version.jar input=file:path\\to\\file");
+        	System.out.print("Output to a file: ");
+        	System.out.println("	java -jar Genotick-version.jar output=csv");
+        	System.out.print("Output to a file: ");
+        	System.out.println("	java -jar Genotick-version.jar output=csv");
+        	System.out.print("show population: ");
+        	System.out.println("	java -jar Genotick.jar showPopulation=directory_with_population");
+        	System.out.print("show robot info: ");
+        	System.out.println("	java -jar Genotick.jar showRobot=directory_with_population\\system name.prg");
+        	System.out.println("contact: 		lukasz.wojtow@gmail.com");
+        	System.out.println("more info: 		genotick.com");       	
+
             System.exit(0);
         }
     }
