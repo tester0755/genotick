@@ -17,6 +17,7 @@ import com.alphatica.genotick.mutator.MutatorFactory;
 import com.alphatica.genotick.mutator.MutatorSettings;
 import com.alphatica.genotick.population.*;
 import com.alphatica.genotick.processor.RobotExecutorFactory;
+import com.alphatica.genotick.ui.UserInputOutputFactory;
 import com.alphatica.genotick.ui.UserOutput;
 
 import java.util.HashMap;
@@ -24,12 +25,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Simulation {
-    private final UserOutput output;
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
     private Population population;
 
     @SuppressWarnings("WeakerAccess")
-    public Simulation(UserOutput output) {
-        this.output = output;
+    public Simulation() {
     }
 
 
@@ -43,7 +43,7 @@ public class Simulation {
         RobotBreeder breeder = wireBreeder(mainSettings, mutator);
         population = wirePopulation(mainSettings);
         Engine engine = wireEngine(mainSettings, data, killer, breeder, population);
-        List<TimePointStats> results = engine.start(output);
+        List<TimePointStats> results = engine.start();
         showSummary(results);
         return results;
     }

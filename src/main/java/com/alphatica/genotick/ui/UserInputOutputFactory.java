@@ -5,6 +5,7 @@ import java.io.IOException;
 public class UserInputOutputFactory {
     private static final String INPUT_STRING = "input";
     private static final String OUTPUT_STRING = "output";
+    private static UserOutput userOutput;
 
     public static UserInput getUserInput(Parameters parameters) {
         String input = parameters.getValue(INPUT_STRING);
@@ -37,9 +38,16 @@ public class UserInputOutputFactory {
         String output = parameters.getValue(OUTPUT_STRING);
         parameters.removeKey(OUTPUT_STRING);
         if (output != null && output.equals("csv"))
-            return new CsvOutput();
+        	userOutput = new CsvOutput();
         else
-            return new ConsoleOutput();
-
+            userOutput = new ConsoleOutput();
+        return userOutput;
+    }
+    
+    public static UserOutput getUserOutput() {
+    	if(userOutput != null) {
+    		userOutput = new ConsoleOutput();
+    	}    		
+    	return userOutput;
     }
 }
