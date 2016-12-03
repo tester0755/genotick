@@ -8,6 +8,7 @@ import com.alphatica.genotick.genotick.Simulation;
 @SuppressWarnings("WeakerAccess")
 abstract public class BasicUserInput implements UserInput {
     private Simulation simulation;
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
 
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
@@ -18,9 +19,9 @@ abstract public class BasicUserInput implements UserInput {
     }
 
     @Override
-    public MainAppData getData(String settings, UserOutput output) {
+    public MainAppData getData(String settings) {
         DataLoader dl = DataFactory.getDefaultLoader(settings);
-        return dl.createRobotData(output);
+        return dl.createRobotData();
     }
 
 }

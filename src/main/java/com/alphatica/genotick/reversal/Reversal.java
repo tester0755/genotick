@@ -4,6 +4,7 @@ import com.alphatica.genotick.data.DataSet;
 import com.alphatica.genotick.data.DataSetName;
 import com.alphatica.genotick.data.FileSystemDataLoader;
 import com.alphatica.genotick.data.MainAppData;
+import com.alphatica.genotick.ui.UserInputOutputFactory;
 import com.alphatica.genotick.ui.UserOutput;
 
 import java.io.*;
@@ -13,16 +14,15 @@ import java.util.*;
 
 public class Reversal {
     private final String reverseValue;
-    private final UserOutput output;
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
 
-    public Reversal(String reverseValue, UserOutput output) {
+    public Reversal(String reverseValue) {
         this.reverseValue = reverseValue;
-        this.output = output;
     }
 
     public void reverse() {
         FileSystemDataLoader loader = new FileSystemDataLoader(reverseValue);
-        MainAppData data = loader.createRobotData(output);
+        MainAppData data = loader.createRobotData();
         reverseData(data);
     }
 

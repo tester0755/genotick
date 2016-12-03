@@ -11,15 +11,16 @@ import java.util.Random;
 @SuppressWarnings("unused")
 class RandomParametersInput extends BasicUserInput {
     private Random r = RandomGenerator.assignRandom();
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
 
     @Override
-    public MainSettings getSettings(UserOutput output) {
+    public MainSettings getSettings() {
         MainSettings defaults = MainSettings.getSettings();
         defaults.populationDAO = "";
         defaults.requireSymmetricalRobots = true;
         defaults.killNonPredictingRobots = true;
         defaults.performTraining = true;
-        MainAppData data = getData(Main.DEFAULT_DATA_DIR,output);
+        MainAppData data = getData(Main.DEFAULT_DATA_DIR);
         assignTimePoints(defaults, data);
         return assignRandom(defaults);
     }

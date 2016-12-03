@@ -174,7 +174,7 @@ public class Main {
             return;
         }
         YahooFixer yahooFixer = new YahooFixer(yahooValue);
-        yahooFixer.fixFiles(output);
+        yahooFixer.fixFiles();
         System.exit(0);
     }
 
@@ -194,7 +194,7 @@ public class Main {
         String reverseValue = parameters.getValue("reverse");
         if(reverseValue == null)
             return;
-        Reversal reversal = new Reversal(reverseValue,output);
+        Reversal reversal = new Reversal(reverseValue);
         reversal.reverse();
         System.exit(0);
     }
@@ -204,10 +204,10 @@ public class Main {
             output.errorMessage("Not all arguments processed: " + parameters.getUnconsumed());
             exit(errorCodes.UNKNOWN_ARGUMENT);
         }
-        Simulation simulation = new Simulation(output);
+        Simulation simulation = new Simulation();
         input.setSimulation(simulation);
-        MainSettings settings = input.getSettings(output);
-        MainAppData data = input.getData(settings.dataSettings,output);
+        MainSettings settings = input.getSettings();
+        MainAppData data = input.getData(settings.dataSettings);
         settings.validateTimePoints(data);
         simulation.start(settings,data);
     }

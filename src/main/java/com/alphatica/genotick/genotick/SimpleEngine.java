@@ -12,6 +12,7 @@ import com.alphatica.genotick.data.DataUtils;
 import com.alphatica.genotick.data.MainAppData;
 import com.alphatica.genotick.killer.RobotKiller;
 import com.alphatica.genotick.population.Population;
+import com.alphatica.genotick.ui.UserInputOutputFactory;
 import com.alphatica.genotick.ui.UserOutput;
 
 import java.io.File;
@@ -27,6 +28,7 @@ public class SimpleEngine implements Engine {
     private Population population;
     private MainAppData data;
     private final ProfitRecorder profitRecorder;
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
 
     private SimpleEngine() {
         profitRecorder = new ProfitRecorder();
@@ -36,7 +38,7 @@ public class SimpleEngine implements Engine {
     }
 
     @Override
-    public List<TimePointStats> start(UserOutput output) {
+    public List<TimePointStats> start() {
         Thread.currentThread().setName("Main engine execution thread");
         double result = 1;
         initPopulation();
