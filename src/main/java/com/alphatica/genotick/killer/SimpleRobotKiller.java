@@ -3,6 +3,7 @@ package com.alphatica.genotick.killer;
 import com.alphatica.genotick.genotick.RandomGenerator;
 import com.alphatica.genotick.population.Population;
 import com.alphatica.genotick.population.RobotInfo;
+import com.alphatica.genotick.ui.UserInputOutputFactory;
 import com.alphatica.genotick.ui.UserOutput;
 
 import java.util.*;
@@ -11,24 +12,36 @@ import java.util.*;
 class SimpleRobotKiller implements RobotKiller {
     private RobotKillerSettings settings;
     private final Random random;
-    private final UserOutput output;
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
 
-    public static RobotKiller getInstance(UserOutput output) {
-        return new SimpleRobotKiller(output);
+    public static RobotKiller getInstance() {
+        return new SimpleRobotKiller();
     }
-    private SimpleRobotKiller(UserOutput output) {
+    private SimpleRobotKiller() {
         random = RandomGenerator.assignRandom();
-        this.output = output;
     }
 
     @Override
     public void killRobots(Population population, List<RobotInfo> robotsInfos) {
+        int before = population.getSize(), after;
         killNonPredictingRobots(population, robotsInfos);
+        after = population.getSize();
+        output.debugMessage("killedByPrediction=" + (before - after));
+        before = after;
         killNonSymmetricalRobots(population, robotsInfos);
+        after = population.getSize();
+        output.debugMessage("killedBySymmetry=" + (before - after));
         List<RobotInfo> listCopy = new ArrayList<>(robotsInfos);
         removeProtectedRobots(population,listCopy);
+        output.debugMessage("protectedRobots=" + (population.getSize() - listCopy.size()));
+        before = population.getSize();
         killRobotsByWeight(population, listCopy, robotsInfos);
+        after = population.getSize();
+        output.debugMessage("killedByWeight=" + (before - after));
+        before = after;
         killRobotsByAge(population, listCopy, robotsInfos);
+        after = population.getSize();
+        output.debugMessage("killedByAge=" + (before - after));
     }
 
     private void killNonSymmetricalRobots(Population population, List<RobotInfo> list) {

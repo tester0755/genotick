@@ -105,7 +105,7 @@ public class Simulation {
         killerSettings.protectBestRobots = settings.protectBestRobots;
         killerSettings.killNonPredictingRobots = settings.killNonPredictingRobots;
         killerSettings.requireSymmetricalRobots = settings.requireSymmetricalRobots;
-        return RobotKillerFactory.getDefaultRobotKiller(killerSettings,output);
+        return RobotKillerFactory.getDefaultRobotKiller(killerSettings);
     }
 
     private Mutator getMutator(MainSettings settings) {

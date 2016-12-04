@@ -7,6 +7,8 @@ import com.alphatica.genotick.mutator.Mutator;
 import com.alphatica.genotick.population.Population;
 import com.alphatica.genotick.population.Robot;
 import com.alphatica.genotick.population.RobotInfo;
+import com.alphatica.genotick.ui.UserInputOutputFactory;
+import com.alphatica.genotick.ui.UserOutput;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,6 +17,7 @@ import java.util.List;
 public class SimpleBreeder implements RobotBreeder {
     private BreederSettings settings;
     private Mutator mutator;
+    private final UserOutput output = UserInputOutputFactory.getUserOutput();
 
     public static RobotBreeder getInstance() {
         return new SimpleBreeder();
@@ -23,9 +26,19 @@ public class SimpleBreeder implements RobotBreeder {
     @Override
     public void breedPopulation(Population population, List<RobotInfo> robotInfos) {
         if (population.haveSpaceToBreed()) {
+            int before = population.getSize(), after;
             addRequiredRandomRobots(population);
+            after = population.getSize();
+            output.debugMessage("requiredRandomRobots=" + (after - before));
+            before = after;
             breedPopulationFromParents(population, robotInfos);
+            after = population.getSize();
+            output.debugMessage("breededRobots=" + (after - before));
+            before = after;
             addOptionalRandomRobots(population);
+            after = population.getSize();
+            output.debugMessage("optionalRandomRobots=" + (after - before));
+            output.debugMessage("totalRobots=" + after);
         }
     }
 
