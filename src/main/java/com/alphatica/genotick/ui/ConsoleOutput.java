@@ -49,7 +49,7 @@ class ConsoleOutput implements UserOutput {
 
     @Override
     public void infoMessage(String s) {
-        System.out.println(s);
+        log(s);
     }
 
     private void log(String string) {

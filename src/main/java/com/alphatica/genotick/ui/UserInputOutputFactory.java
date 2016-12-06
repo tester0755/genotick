@@ -39,13 +39,13 @@ public class UserInputOutputFactory {
         parameters.removeKey(OUTPUT_STRING);
         if (output != null && output.equals("csv"))
         	userOutput = new CsvOutput();
-        else
+        else if(userOutput == null)
             userOutput = new ConsoleOutput();
         return userOutput;
     }
     
     public static UserOutput getUserOutput() {
-    	if(userOutput != null) {
+    	if(userOutput == null) {
     		userOutput = new ConsoleOutput();
     	}    		
     	return userOutput;
