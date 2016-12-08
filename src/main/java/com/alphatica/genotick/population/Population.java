@@ -11,6 +11,8 @@ public interface Population {
 
     int getSize();
 
+    double getAverageAge();
+
     void setDao(PopulationDAO dao);
 
     void saveRobot(Robot robot);
@@ -26,4 +28,5 @@ public interface Population {
     void savePopulation(String path);
 
     RobotName[] listRobotsNames();
+
 }

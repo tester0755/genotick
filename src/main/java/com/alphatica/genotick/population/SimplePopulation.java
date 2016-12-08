@@ -70,4 +70,14 @@ public class SimplePopulation implements Population {
     public RobotName[] listRobotsNames() {
         return dao.listRobotNames();
     }
+
+    @Override
+    public double getAverageAge()
+    {
+        int age = 0;
+        for(Robot robot : dao.getRobotList()) {
+            age += robot.getTotalPredictions();
+        }
+        return age / this.getSize();
+    }
 }

@@ -149,5 +149,6 @@ public class SimpleEngine implements Engine {
         List<RobotInfo> list = timePointExecutor.getRobotInfos();
         killer.killRobots(population,list);
         breeder.breedPopulation(population,list);
+        output.debugMessage("averageAge=" + population.getAverageAge());
     }
 }
