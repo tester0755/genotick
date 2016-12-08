@@ -16,8 +16,9 @@ class RandomParametersInput extends BasicUserInput {
     @Override
     public MainSettings getSettings() {
         MainSettings defaults = MainSettings.getSettings();
+        defaults.populationDesiredSize = 20000;
         defaults.populationDAO = "";
-        defaults.requireSymmetricalRobots = true;
+        defaults.requireSymmetricalRobots = false;
         defaults.killNonPredictingRobots = true;
         defaults.performTraining = true;
         MainAppData data = getData(Main.DEFAULT_DATA_DIR);
@@ -30,7 +31,7 @@ class RandomParametersInput extends BasicUserInput {
         TimePoint last = data.getLastTimePoint();
         long diff = last.getValue() - first.getValue();
         long count = Math.abs(r.nextLong() % diff);
-        defaults.startTimePoint = new TimePoint(last.getValue() - count);
+        //defaults.startTmePoint = new TimePoint(last.getValue() - count);
         defaults.endTimePoint = last;
     }
 
@@ -38,19 +39,19 @@ class RandomParametersInput extends BasicUserInput {
 
         settings.dataMaximumOffset = r.nextInt(256) + 1;
         settings.processorInstructionLimit = r.nextInt(256) + 1;
-        settings.maximumDeathByAge = r.nextDouble();
-        settings.maximumDeathByWeight = r.nextDouble();
+        settings.maximumDeathByAge = 0.25 * r.nextDouble();
+        settings.maximumDeathByWeight = 0.25 * r.nextDouble();
         settings.probabilityOfDeathByAge = r.nextDouble();
         settings.probabilityOfDeathByWeight = r.nextDouble();
         settings.inheritedChildWeight = r.nextDouble();
         settings.protectRobotsUntilOutcomes = r.nextInt(100);
-        settings.protectBestRobots = r.nextDouble();
-        settings.newInstructionProbability = r.nextDouble();
-        settings.instructionMutationProbability = r.nextDouble();
-        settings.skipInstructionProbability = settings.newInstructionProbability;
+        settings.protectBestRobots = 0.25 * r.nextDouble();
+        settings.newInstructionProbability = 0.25 * r.nextDouble();
+        settings.instructionMutationProbability = 0.25 * r.nextDouble();
+        settings.skipInstructionProbability = 0.25 * settings.newInstructionProbability;
         settings.minimumOutcomesToAllowBreeding = r.nextInt(50);
         settings.minimumOutcomesBetweenBreeding = r.nextInt(50);
-        settings.randomRobotsAtEachUpdate = r.nextDouble();
+        settings.randomRobotsAtEachUpdate = 0.25 * r.nextDouble();
         settings.resultThreshold = 1 + (r.nextDouble() * 9);
         return settings;
 
