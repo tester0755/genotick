@@ -123,7 +123,8 @@ public class SimpleEngine implements Engine {
         try {
             Double actualChange = data.getActualChange(dataSetResult.getName(),timePoint);
             if(!actualChange.isNaN()) {
-                printPercentEarned(dataSetResult.getName(), actualChange, prediction,output);
+                output.debugMessage("underlying return for " + timePoint.getValue() + " " + dataSetResult.getName() + " "  + actualChange);
+                printPercentEarned(dataSetResult.getName(), actualChange, prediction, output, timePoint.getValue());
                 if(!actualChange.isInfinite() && !actualChange.isNaN() && prediction != null) {
                     timePointStats.update(dataSetResult.getName(), actualChange, prediction);
                 }
@@ -143,6 +144,18 @@ public class SimpleEngine implements Engine {
         else
             percent = -Math.abs(actualChange);
         output.infoMessage("Profit for " + name + " " + percent);
+    }
+
+    private void printPercentEarned(DataSetName name, double actualChange, Prediction prediction, UserOutput output, long timePointValue) {
+        double percent;
+        if(prediction == Prediction.OUT) {
+            return;
+        }
+        if(prediction.isCorrect(actualChange))
+            percent = Math.abs(actualChange);
+        else
+            percent = -Math.abs(actualChange);
+        output.infoMessage("Profit for " + timePointValue + " " + name + " " + percent);
     }
 
     private void updatePopulation() {
